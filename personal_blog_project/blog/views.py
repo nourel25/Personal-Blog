@@ -1,5 +1,15 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 
 def home(request):
-    return HttpResponse('<h1>home</h1>')
+    articles = [
+        {
+        'title': 'Blog Article 1',
+        'date_posted': 'September 11, 2024'
+        },
+
+        {
+        'title': 'Blog Article 2',
+        'date_posted': 'September 5, 2024'
+        }   
+    ]
+    return render(request, 'blog/home.html', {'articles': articles})
