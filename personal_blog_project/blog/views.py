@@ -1,15 +1,12 @@
 from django.shortcuts import render
+from .models import Article
+from django.views.generic import ListView, DetailView
 
-def home(request):
-    articles = [
-        {
-        'title': 'Blog Article 1',
-        'date_posted': 'September 11, 2024'
-        },
 
-        {
-        'title': 'Blog Article 2',
-        'date_posted': 'September 5, 2024'
-        }   
-    ]
-    return render(request, 'blog/home.html', {'articles': articles})
+class ArticleListView(ListView):
+    model = Article
+    template_name = 'blog/home.html'
+    context_object_name = 'articles'
+
+class ArticelDetailView(DetailView):
+    model = Article
