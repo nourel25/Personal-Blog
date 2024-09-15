@@ -1,5 +1,9 @@
 {% extends "blog/base.html" %}
 {% block content %}
+      <!-- New div for title and button -->
+      <div class="header-section mb-3">
+        <a class="btn btn-primary" href="{%url 'new' %}">New</a>
+    </div>
     {% for article in articles %}
         <article class="media content-section">
           <div class="media-body">
