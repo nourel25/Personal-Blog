@@ -10,9 +10,9 @@
             <div class="article-metadata">
               <small class="text-muted">{{ article.date_posted }}</small>
             </div>
-            <h2><a class="article-title" href="{% url 'article-detail' pk=article.pk %}">{{ article.title }}</a></h2>
+            <h2><a class="article-title" href="{% url 'detail' pk=article.pk %}">{{ article.title }}</a></h2>
             <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'update' pk=article.pk %}">Update</a>
-            <a class="btn btn-danger btn-sm mt-1 mb-1" href="">Delete</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'delete' pk=article.pk %}">Delete</a>
           </div>
         </article>
     {% endfor %}

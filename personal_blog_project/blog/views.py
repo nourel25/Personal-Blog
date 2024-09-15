@@ -7,7 +7,8 @@ from django.views.generic import (
     ListView, 
     DetailView,
     CreateView,
-    UpdateView
+    UpdateView,
+    DeleteView
 )
 
 
@@ -73,6 +74,22 @@ class ArticleUpdateView(UserPassesTestMixin, UpdateView):
     def form_valid(self, form):
         messages.success(self.request, "Article updated successfully!")
         return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('dashboard')
+    
+
+class ArticleDeleteView(UserPassesTestMixin, DeleteView):
+    model = Article
+
+    def test_func(self):
+        return self.request.user.is_superuser
+    
+    def handle_no_permission(self):
+        messages.error(self.request, 
+                       "You do not have permission to view this page.")
+        
+        return redirect('home')
 
     def get_success_url(self):
         return reverse('dashboard')

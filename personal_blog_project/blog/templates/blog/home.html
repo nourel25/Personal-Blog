@@ -6,7 +6,7 @@
             <div class="article-metadata">
               <small class="text-muted">{{ article.date_posted }}</small>
             </div>
-            <h2><a class="article-title" href="{% url 'article-detail' pk=article.pk %}">{{ article.title }}</a></h2>
+            <h2><a class="article-title" href="{% url 'detail' pk=article.pk %}">{{ article.title }}</a></h2>
           </div>
         </article>
     {% endfor %}
