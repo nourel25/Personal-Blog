@@ -1,6 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Article
-from django.views.generic import ListView, DetailView
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib import messages
+from django.views.generic import (
+    ListView, 
+    DetailView,
+)
+
 
 
 class ArticleListView(ListView):
@@ -10,3 +16,18 @@ class ArticleListView(ListView):
 
 class ArticelDetailView(DetailView):
     model = Article
+
+# Admin Views
+class DashBoard(UserPassesTestMixin, ListView):
+    model = Article
+    template_name = 'blog/dashboard.html'
+    context_object_name = 'articles'
+
+    def test_func(self):
+        return self.request.user.is_superuser
+    
+    def handle_no_permission(self):
+        messages.error(self.request, 
+                       "You do not have permission to view this page.")
+        
+        return redirect('home')
