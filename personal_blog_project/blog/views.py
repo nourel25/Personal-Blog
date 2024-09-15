@@ -6,7 +6,8 @@ from django.urls import reverse
 from django.views.generic import (
     ListView, 
     DetailView,
-    CreateView
+    CreateView,
+    UpdateView
 )
 
 
@@ -50,6 +51,27 @@ class ArticleCreateView(UserPassesTestMixin, CreateView):
     
     def form_valid(self, form):
         messages.success(self.request, "Article created successfully!")
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('dashboard')
+    
+
+class ArticleUpdateView(UserPassesTestMixin, UpdateView):
+    model = Article
+    fields = ['title', 'content']
+
+    def test_func(self):
+        return self.request.user.is_superuser
+    
+    def handle_no_permission(self):
+        messages.error(self.request, 
+                       "You do not have permission to view this page.")
+        
+        return redirect('home')
+    
+    def form_valid(self, form):
+        messages.success(self.request, "Article updated successfully!")
         return super().form_valid(form)
 
     def get_success_url(self):
